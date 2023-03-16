@@ -1,11 +1,11 @@
 #include <stdio.h>
 
-typedef struct registo
-{int codigo; // código do meio de mobilidade elétrica
- char tipo[50];
- float bateria;
- float autonomia;
- struct registo* seguinte;
+typedef struct meio_registo
+{   int codigo; // código do meio de mobilidade elétrica
+    char tipo[50];
+    float bateria;
+    float autonomia;
+    struct meio_registo * seguinte;
 } Meio;
 
 

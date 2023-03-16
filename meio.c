@@ -42,7 +42,7 @@ Meio* lerMeios()
 Meio* inserirMeio(Meio * inicio, int cod, char tipo[], float bat, float aut)
 {
  if (!existeMeio(inicio, cod))
- {Meio * novo = malloc(sizeof(struct registo));
+ {Meio * novo = malloc(sizeof(struct meio_registo));
   if (novo != NULL)
   {novo->codigo = cod;
    strcpy(novo->tipo,tipo);
