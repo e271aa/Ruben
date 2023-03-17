@@ -2,40 +2,79 @@
 #include <string.h>
 #include "meio.h"
 
-
 int guardarMeios(Meio* inicio)
-{FILE* fp;
- fp = fopen("meios.txt","w");
- if (fp!=NULL)
- {
- Meio* aux= inicio;
- while (aux != NULL)
- {
-  fprintf(fp,"%d;%f;%f;%s\n", aux->codigo, aux->bateria, 
-	                      aux->autonomia, aux->tipo);
-  aux = aux->seguinte;
- }
- fclose(fp);
- return(1);
- }
- else return(0);
+{
+    FILE* fp;
+    fp = fopen("meios.txt","w");
+    if (fp!=NULL)
+    {
+        Meio* aux= inicio;
+        while (aux != NULL)
+        {
+            fprintf(fp,"%d;%f;%f;%s\n", aux->codigo, aux->bateria, aux->autonomia, aux->tipo);
+            aux = aux->seguinte;
+        }
+        fclose(fp);
+        return(1);
+    }
+    else
+        return(0);
 }
 
 Meio* lerMeios()
-{FILE* fp;
- int cod;
- float bat, aut;
- char tipo[50];
- Meio* aux=NULL;
- fp = fopen("meios.txt","r");
- if (fp!=NULL)
- {while (!feof(fp))
-  { fscanf(fp,"%d;%f;%f;%[^\n]s\n", &cod, &bat, &aut, tipo);
-    aux = inserirMeio(aux, cod, tipo, bat, aut);
-  }
-  fclose(fp);
- }
- return(aux);
+{
+    FILE* fp;
+    int cod;
+    float bat, aut;
+    char tipo[50];
+    Meio* aux=NULL;
+    fp = fopen("meios.txt","r");
+    if (fp!=NULL)
+    {
+        while (!feof(fp))
+        {
+            fscanf(fp,"%d;%f;%f;%[^\n]s\n", &cod, &bat, &aut, tipo);
+            aux = inserirMeio(aux, cod, tipo, bat, aut);
+        }
+        fclose(fp);
+    }
+    return(aux);
+}
+
+int guardarMeiosBinario(Meio* inicio)
+{
+    FILE* fp;
+    fp = fopen("meios.bin","wb");
+    if (fp!=NULL)
+    {
+        Meio* aux= inicio;
+        while (aux != NULL)
+        {
+            fwrite(aux, sizeof(Meio), 1, fp);
+            aux = aux->seguinte;
+        }
+        fclose(fp);
+        return(1);
+    }
+    else
+        return(0);
+}
+
+Meio* lerMeiosBinario()
+{
+    FILE* fp;
+    Meio* inicio = NULL;
+    fp = fopen("meios.bin","rb");
+    if (fp!=NULL)
+    {
+        Meio m;
+        while (fread(&m, sizeof(Meio), 1, fp) == 1)
+        {
+            inicio = inserirMeio(inicio, m.codigo, m.tipo, m.bateria, m.autonomia);
+        }
+        fclose(fp);
+    }
+    return(inicio);
 }
 
 // Inserção de um novo registo

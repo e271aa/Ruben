@@ -16,3 +16,6 @@ Meio* removerMeio(Meio* inicio, int cod); // Remover um meio a partir do seu có
 
 int guardarMeios(Meio* inicio);
 Meio* lerMeios();
+
+int guardarMeiosBinario(Meio* inicio);
+Meio* lerMeiosBinario();
